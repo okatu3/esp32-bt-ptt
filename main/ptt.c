@@ -95,8 +95,15 @@ static void warn_cb(void *arg)
 void ptt_init(void)
 {
     s_lock = xSemaphoreCreateMutex();
+    /* set the idle level first so the radio never sees a PTT glitch */
     gpio_reset_pin(CONFIG_BTPTT_PTT_GPIO);
+    gpio_set_pull_mode(CONFIG_BTPTT_PTT_GPIO, GPIO_FLOATING);
+    gpio_set_level(CONFIG_BTPTT_PTT_GPIO, PTT_LEVEL(false));
+#if CONFIG_BTPTT_PTT_ACTIVE_HIGH
     gpio_set_direction(CONFIG_BTPTT_PTT_GPIO, GPIO_MODE_OUTPUT);
+#else
+    gpio_set_direction(CONFIG_BTPTT_PTT_GPIO, GPIO_MODE_OUTPUT_OD); /* float while receiving */
+#endif
 #if CONFIG_BTPTT_LED_GPIO >= 0
     gpio_reset_pin(CONFIG_BTPTT_LED_GPIO);
     gpio_set_direction(CONFIG_BTPTT_LED_GPIO, GPIO_MODE_OUTPUT);

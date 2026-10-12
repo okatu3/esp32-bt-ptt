@@ -14,7 +14,12 @@ menu "BT-PTT configuration"
 
     config BTPTT_PTT_ACTIVE_HIGH
         bool "PTT output is active high"
-        default y
+        default n
+        help
+            Off (default): ICOM handhelds. The pin is open-drain and pulls the
+            radio MIC/PTT line to GND through ~33-47 kohm while transmitting,
+            and floats while receiving.
+            On: push-pull, high while transmitting (opto-coupler / transistor).
 
     config BTPTT_LED_GPIO
         int "TX indicator LED GPIO (-1 = none)"
