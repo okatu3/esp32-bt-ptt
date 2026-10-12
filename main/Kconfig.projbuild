@@ -7,14 +7,24 @@ menu "BT-PTT configuration"
     config BTPTT_PTT_GPIO
         int "PTT output GPIO (to the radio PTT interface)"
         range 0 33
-        default 22
+        default 14
         help
             GPIO that drives the radio PTT through an opto-coupler or transistor.
-            On the A1S AudioKit v2.2, GPIO22 also drives the green LED, which then
-            doubles as a TX indicator.
+            Provisional default GPIO14 (SD card CLK, unused by this firmware).
 
     config BTPTT_PTT_ACTIVE_HIGH
         bool "PTT output is active high"
+        default y
+
+    config BTPTT_LED_GPIO
+        int "TX indicator LED GPIO (-1 = none)"
+        range -1 33
+        default 22
+        help
+            A1S AudioKit v2.2: green LED on GPIO22, lit when the pin is low.
+
+    config BTPTT_LED_ACTIVE_LOW
+        bool "TX LED is lit when the pin is low"
         default y
 
     config BTPTT_KEY_GPIO

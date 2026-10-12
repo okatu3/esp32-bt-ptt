@@ -13,6 +13,11 @@ typedef struct {
 
 static const tone_seg_t k_tx_on[] = { { 1200, 120 }, { 0, 0 } };
 static const tone_seg_t k_tx_off[] = { { 700, 70 }, { 0, 60 }, { 700, 70 }, { 0, 0 } };
+static const tone_seg_t k_tot_warn[] = {
+    { 1000, 80 }, { 0, 80 }, { 1000, 80 }, { 0, 760 },
+    { 1000, 80 }, { 0, 80 }, { 1000, 80 }, { 0, 760 },
+    { 1000, 80 }, { 0, 80 }, { 1000, 80 }, { 0, 0 },
+};
 static const tone_seg_t k_tot[] = { { 500, 300 }, { 0, 150 }, { 500, 300 }, { 0, 150 }, { 500, 300 }, { 0, 0 } };
 static const tone_seg_t k_connected[] = { { 800, 100 }, { 1200, 150 }, { 0, 0 } };
 
@@ -47,6 +52,7 @@ void tone_play(tone_id_t id)
     switch (id) {
     case TONE_TX_ON: seq = k_tx_on; break;
     case TONE_TX_OFF: seq = k_tx_off; break;
+    case TONE_TOT_WARN: seq = k_tot_warn; break;
     case TONE_TOT: seq = k_tot; break;
     default: seq = k_connected; break;
     }
