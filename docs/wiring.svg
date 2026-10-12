@@ -6,7 +6,6 @@
   <rect x="20" y="70" width="210" height="450" rx="8" fill="#eef4ff" stroke="#3366aa" stroke-width="2"/>
   <text x="125" y="98" text-anchor="middle" font-weight="bold" fill="#224">A1S AudioKit V2.2</text>
   <text x="220" y="115" text-anchor="end" fill="#111">PHONE 出力 (Tip/L)</text>
-  <text x="220" y="205" text-anchor="end" fill="#111">3.3V</text>
   <text x="220" y="295" text-anchor="end" fill="#111">GPIO14 (PTT)</text>
   <text x="220" y="405" text-anchor="end" fill="#111">LINE IN (Tip/L)</text>
   <text x="220" y="495" text-anchor="end" fill="#111">GND</text>
@@ -27,11 +26,6 @@
     <line x1="560" y1="110" x2="560" y2="200"/>
     <line x1="560" y1="200" x2="700" y2="200"/>
 
-    <!-- 2.2k bias: node A (330,110) to 3.3V (330,200) -->
-    <line x1="330" y1="110" x2="330" y2="130"/>
-    <polyline points="330,130 342,135 318,145 342,155 318,165 342,175 330,180"/>
-    <line x1="330" y1="180" x2="330" y2="200"/>
-    <line x1="230" y1="200" x2="330" y2="200"/>
 
     <!-- PTT 47k -->
     <line x1="230" y1="290" x2="400" y2="290"/>
@@ -51,16 +45,13 @@
   </g>
 
   <g fill="#111">
-    <circle cx="330" cy="110" r="4"/>
-    <circle cx="330" cy="200" r="4"/>
     <circle cx="560" cy="200" r="4"/>
     <circle cx="470" cy="400" r="4"/>
     <circle cx="470" cy="490" r="4"/>
   </g>
 
   <!-- part labels -->
-  <text x="436" y="82" text-anchor="middle" fill="#b00">0.01µF (103)</text>
-  <text x="350" y="160" fill="#b00">2.2kΩ</text>
+  <text x="436" y="82" text-anchor="middle" fill="#b00">0.01µF (103) ※1µF 推奨</text>
   <text x="430" y="270" text-anchor="middle" fill="#b00">47kΩ</text>
   <text x="500" y="450" fill="#b00">1000pF (102)</text>
 
@@ -69,7 +60,7 @@
     <text x="20" y="560" font-weight="bold">動作</text>
     <text x="20" y="582">・送信: GPIO14 = LOW(オープンドレイン)→ 47kΩ で MIC/PTT 線を GND へ(ICOM は 33kΩ 前後で PTT)</text>
     <text x="20" y="604">・受信: GPIO14 は開放(ハイインピーダンス)。無線機へ 3.3V はかからない</text>
-    <text x="20" y="626">・送信音声: PHONE 出力 → 0.01µF で DC カット → MIC/PTT 線へ(マイクと PTT は同じ線)</text>
+    <text x="20" y="626">・送信音声: PHONE 出力 → 0.01µF で DC カット → MIC/PTT 線へ(バイアス抵抗は不要: 音源がコーデック出力のため)</text>
     <text x="20" y="648">・受信音声: ID-31 SP → LINE IN(1000pF は RF 除去)。送信表示は基板の緑 LED(GPIO22)</text>
     <text x="20" y="678" font-weight="bold">注意</text>
     <text x="20" y="700">・ID-31 側ジャックのピン配置は取扱説明書で確認。AudioKit 側はプラグの Tip(L)を使用</text>
