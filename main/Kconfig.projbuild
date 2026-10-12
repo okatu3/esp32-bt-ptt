@@ -1,0 +1,34 @@
+menu "BT-PTT configuration"
+
+    config BTPTT_DEVICE_NAME
+        string "Bluetooth device name"
+        default "BT-PTT"
+
+    config BTPTT_PTT_GPIO
+        int "PTT output GPIO (to the radio PTT interface)"
+        range 0 33
+        default 22
+        help
+            GPIO that drives the radio PTT through an opto-coupler or transistor.
+            On the A1S AudioKit v2.2, GPIO22 also drives the green LED, which then
+            doubles as a TX indicator.
+
+    config BTPTT_PTT_ACTIVE_HIGH
+        bool "PTT output is active high"
+        default y
+
+    config BTPTT_KEY_GPIO
+        int "Local PTT key GPIO (-1 = none)"
+        range -1 39
+        default 36
+        help
+            Push button on the board (active low). Short press toggles PTT,
+            holding it for 3 s starts a headset search (pairing).
+            A1S AudioKit v2.2: KEY1 = GPIO36.
+
+    config BTPTT_TOT_DEFAULT_S
+        int "Default TX time-out (seconds, 0 = off)"
+        range 0 600
+        default 180
+
+endmenu
