@@ -87,7 +87,20 @@ V2.2 には ES8388 の配線が異なる版が 2 種類あるため、起動時�
 
 ![接続図](docs/wiring.svg)
 
-印刷用: [docs/wiring.pdf](docs/wiring.pdf)(A4)
+プラグの接点ごとの結線: [docs/connectors.svg](docs/connectors.svg)
+
+印刷用: [docs/wiring.pdf](docs/wiring.pdf)(A4、1 ページ目 回路図・2 ページ目 プラグ結線図)
+
+ID-31 は ICOM ハンディ共通の 2 本ピン型(3.5mm = SP、2.5mm = MIC、ピン間隔 10mm)。
+
+| プラグ | Tip | Ring | Sleeve |
+|---|---|---|---|
+| AudioKit「EARPHONES」(3.5mm ステレオ) | 送信音声(L)→ R1 | 未接続 | GND |
+| AudioKit「LINE IN」(3.5mm ステレオ) | 受信音声(L)← C2 | 未接続 | GND |
+| ID-31「MIC」(2.5mm) | マイク音声 + PTT(C1 と R3 の合流点) | 未接続 | GND |
+| ID-31「SP」(3.5mm) | スピーカー出力 → C2 | 未接続 | GND |
+
+PTT が入らない場合は R3 を 33kΩ → 10kΩ → 3.9kΩ と下げてください。
 
 動作確認済みの ICOM ハンディ機用回路をもとにした推奨構成です。
 
