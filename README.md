@@ -8,7 +8,7 @@ PTT はヘッドセットの **MFB(マルチファンクションボタン)で�
 BTヘッドセット ──HFP / SCO (CVSD 8kHz)── ESP32 (AG) ──I2S── ES8388
                                                      LINE IN  ← 無線機 SP 出力
                                                      PHONE OUT → 無線機 MIC 入力
-                                         GPIO14 (PTT) → 無線機 PTT 回路
+                                         IO19 (PTT) → 無線機 PTT 回路
 ```
 
 ## 動作
@@ -79,7 +79,7 @@ V2.2 には ES8388 の配線が異なる版が 2 種類あるため、起動時�
 |---|---|
 | 無線機 SP 出力 → | **LINE IN** ジャック(左チャンネル/Tip を使用) |
 | → 無線機 MIC 入力 | **PHONE(ヘッドホン)** ジャック |
-| PTT 出力 | **GPIO14**(オープンドレイン、送信時 LOW)。`menuconfig` → *BT-PTT configuration* で変更可 |
+| PTT 出力 | **IO19**(2×7 ヘッダ、オープンドレイン、送信時 LOW)。基板のキーとも共用で、そのキーを押すと直接送信になる。`menuconfig` → *BT-PTT configuration* で変更可 |
 | 送信表示 LED | GPIO22 緑 LED(LOW で点灯)。**点灯 = 送信中** |
 | 本体 PTT キー | KEY1(GPIO36) |
 
@@ -93,7 +93,7 @@ V2.2 には ES8388 の配線が異なる版が 2 種類あるため、起動時�
 
 | 記号 | 値 | 区間 | 内容 |
 |---|---|---|---|
-| R3 | 33kΩ | GPIO14 → MIC/PTT | 送信時 GPIO14 を LOW(オープンドレイン)にして MIC/PTT 線を GND へ引く(ICOM は 33kΩ 前後で PTT 検出。47kΩ でも動作実績あり)。受信時は開放 |
+| R3 | 33kΩ | IO19 → MIC/PTT | 送信時 IO19 を LOW(オープンドレイン)にして MIC/PTT 線を GND へ引く(ICOM は 33kΩ 前後で PTT 検出。47kΩ でも動作実績あり)。受信時は開放 |
 | R1 / R2 | 10kΩ / 100Ω | PHONE 出力 → | 送信音声を約 1/100(−40dB)に減衰。小さければ R2 を 220Ω、大きければ 47Ω |
 | C1 | 1µF | → MIC/PTT | DC カット(電解なら + を ID-31 側) |
 | C2 | 1µF | SP → LINE IN | DC カット(電解なら + を AudioKit 側) |

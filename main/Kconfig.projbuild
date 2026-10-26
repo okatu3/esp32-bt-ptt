@@ -7,10 +7,10 @@ menu "BT-PTT configuration"
     config BTPTT_PTT_GPIO
         int "PTT output GPIO (to the radio PTT interface)"
         range 0 33
-        default 14
+        default 19
         help
             GPIO that drives the radio PTT through an opto-coupler or transistor.
-            Provisional default GPIO14 (SD card CLK, unused by this firmware).
+            A1S AudioKit v2.2: IO19 on the 2x7 header (also wired to an on-board key).
 
     config BTPTT_PTT_ACTIVE_HIGH
         bool "PTT output is active high"

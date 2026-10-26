@@ -6,7 +6,7 @@
   <rect x="20" y="60" width="210" height="460" rx="8" fill="#eef4ff" stroke="#3366aa" stroke-width="2"/>
   <text x="125" y="84" text-anchor="middle" font-weight="bold" fill="#224">A1S AudioKit V2.2</text>
   <text x="220" y="125" text-anchor="end" fill="#111">PHONE 出力 (Tip/L)</text>
-  <text x="220" y="295" text-anchor="end" fill="#111">GPIO14 (PTT)</text>
+  <text x="220" y="295" text-anchor="end" fill="#111">IO19 (PTT)</text>
   <text x="220" y="405" text-anchor="end" fill="#111">LINE IN (Tip/L)</text>
   <text x="220" y="495" text-anchor="end" fill="#111">GND</text>
 
@@ -36,7 +36,7 @@
     <line x1="410" y1="216" x2="430" y2="216"/>
     <line x1="416" y1="222" x2="424" y2="222"/>
 
-    <!-- PTT: GPIO14 -> R3 33k -> node B -->
+    <!-- PTT: IO19 -> R3 33k -> node B -->
     <line x1="230" y1="290" x2="400" y2="290"/>
     <polyline points="400,290 405,278 415,302 425,278 435,302 445,278 455,302 460,290"/>
     <line x1="460" y1="290" x2="580" y2="290"/>
@@ -74,8 +74,8 @@
   <!-- notes -->
   <g font-size="14" fill="#222">
     <text x="20" y="556" font-weight="bold">動作</text>
-    <text x="20" y="578">・送信: GPIO14 = LOW(オープンドレイン)→ R3 で MIC/PTT 線を GND へ(ICOM は 33kΩ 前後で PTT)</text>
-    <text x="20" y="600">・受信: GPIO14 は開放(ハイインピーダンス)。無線機へ 3.3V はかからない</text>
+    <text x="20" y="578">・送信: IO19 = LOW(オープンドレイン)→ R3 で MIC/PTT 線を GND へ(ICOM は 33kΩ 前後で PTT)</text>
+    <text x="20" y="600">・受信: IO19 は開放(ハイインピーダンス)。無線機へ 3.3V はかからない</text>
     <text x="20" y="622">・送信音声: R1/R2 で約 1/100(−40dB)に減衰 → C1 で DC カット → MIC/PTT 線へ</text>
     <text x="20" y="644">・受信音声: ID-31 SP → C2 で DC カット → LINE IN。C3 は RF 除去。送信表示は緑 LED(GPIO22)</text>
     <text x="20" y="674" font-weight="bold">部品・調整</text>
