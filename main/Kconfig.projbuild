@@ -1,5 +1,17 @@
 menu "BT-PTT configuration"
 
+    choice BTPTT_BOARD
+        prompt "Board / audio hardware"
+        default BTPTT_BOARD_AUDIOKIT
+        help
+            Selects the audio backend and the default pins below.
+
+        config BTPTT_BOARD_AUDIOKIT
+            bool "A1S AudioKit v2.2 (ES8388 codec)"
+        config BTPTT_BOARD_WROOM
+            bool "ESP32-WROOM (internal ADC GPIO34 / DAC GPIO25)"
+    endchoice
+
     config BTPTT_DEVICE_NAME
         string "Bluetooth device name"
         default "BT-PTT"
@@ -7,10 +19,12 @@ menu "BT-PTT configuration"
     config BTPTT_PTT_GPIO
         int "PTT output GPIO (to the radio PTT interface)"
         range 0 33
+        default 27 if BTPTT_BOARD_WROOM
         default 19
         help
-            GPIO that drives the radio PTT through an opto-coupler or transistor.
+            GPIO that drives the radio PTT.
             A1S AudioKit v2.2: IO19 on the 2x7 header (also wired to an on-board key).
+            ESP32-WROOM: GPIO27.
 
     config BTPTT_PTT_ACTIVE_HIGH
         bool "PTT output is active high"
@@ -24,22 +38,26 @@ menu "BT-PTT configuration"
     config BTPTT_LED_GPIO
         int "TX indicator LED GPIO (-1 = none)"
         range -1 33
+        default 2 if BTPTT_BOARD_WROOM
         default 22
         help
             A1S AudioKit v2.2: green LED on GPIO22, lit when the pin is low.
+            ESP32-WROOM dev boards: LED on GPIO2 (if fitted), lit when high.
 
     config BTPTT_LED_ACTIVE_LOW
         bool "TX LED is lit when the pin is low"
+        default n if BTPTT_BOARD_WROOM
         default y
 
     config BTPTT_KEY_GPIO
         int "Local PTT key GPIO (-1 = none)"
         range -1 39
+        default 0 if BTPTT_BOARD_WROOM
         default 36
         help
             Push button on the board (active low). Short press toggles PTT,
             holding it for 3 s starts a headset search (pairing).
-            A1S AudioKit v2.2: KEY1 = GPIO36.
+            A1S AudioKit v2.2: KEY1 = GPIO36. ESP32-WROOM: BOOT button = GPIO0.
 
     config BTPTT_TOT_DEFAULT_S
         int "Default TX time-out (seconds, 0 = off)"

@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" font-family="'Yu Gothic','Meiryo',sans-serif" font-size="15">
+  <rect width="1000" height="1000" fill="#ffffff"/>
+  <text x="500" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#111">BT-PTT(ESP32-WROOM 版)⇔ ICOM ID-31 接続図</text>
+  <text x="500" y="58" text-anchor="middle" font-size="13" fill="#444">内蔵 DAC(GPIO25)/ 内蔵 ADC(GPIO34)使用、コーデック不要 ／ 右: ID-31 の 2 本ピン型プラグ(3.5mm=SP、2.5mm=MIC)</text>
+
+  <!-- ESP32 box -->
+  <rect x="30" y="80" width="190" height="560" rx="8" fill="#eef4ff" stroke="#3366aa" stroke-width="2"/>
+  <text x="125" y="104" text-anchor="middle" font-weight="bold" fill="#224">ESP32-WROOM</text>
+  <text x="125" y="122" text-anchor="middle" font-size="12" fill="#224">(DevKitC 等)</text>
+  <text x="210" y="175" text-anchor="end" fill="#111">GPIO25 (DAC)</text>
+  <text x="210" y="345" text-anchor="end" fill="#111">GPIO27 (PTT)</text>
+  <text x="210" y="445" text-anchor="end" fill="#111">3.3V</text>
+  <text x="210" y="505" text-anchor="end" fill="#111">GPIO34 (ADC)</text>
+  <text x="210" y="625" text-anchor="end" fill="#111">GND</text>
+
+  <!-- ID-31 MIC plug -->
+  <rect x="780" y="150" width="190" height="120" rx="6" fill="#fff4ea" stroke="#aa6633" stroke-width="2"/>
+  <text x="875" y="172" text-anchor="middle" font-size="13" font-weight="bold" fill="#422">ID-31「MIC」2.5mm</text>
+  <text x="792" y="215" fill="#111">Tip(MIC/PTT)</text>
+  <text x="792" y="240" fill="#999">Ring 未接続</text>
+  <text x="792" y="262" fill="#111">Sleeve(GND)</text>
+
+  <!-- ID-31 SP plug -->
+  <rect x="780" y="440" width="190" height="200" rx="6" fill="#fff4ea" stroke="#aa6633" stroke-width="2"/>
+  <text x="875" y="462" text-anchor="middle" font-size="13" font-weight="bold" fill="#422">ID-31「SP」3.5mm</text>
+  <text x="792" y="505" fill="#111">Tip(SP)</text>
+  <text x="792" y="560" fill="#999">Ring 未接続</text>
+  <text x="792" y="625" fill="#111">Sleeve(GND)</text>
+
+  <g stroke="#111" stroke-width="2" fill="none">
+    <!-- TX: GPIO25 -> R1 10k -> N -> C1 1uF -> MIC tip ; N -> R2 100 || C4 0.47u -> GND -->
+    <line x1="220" y1="170" x2="270" y2="170"/>
+    <polyline points="270,170 275,158 285,182 295,158 305,182 315,158 325,182 330,170"/>
+    <line x1="330" y1="170" x2="560" y2="170"/>
+    <line x1="560" y1="152" x2="560" y2="188"/>
+    <line x1="572" y1="152" x2="572" y2="188"/>
+    <line x1="572" y1="170" x2="680" y2="170"/>
+    <line x1="680" y1="170" x2="680" y2="210"/>
+    <line x1="680" y1="210" x2="780" y2="210"/>
+    <!-- R2 at x=400 -->
+    <line x1="400" y1="170" x2="400" y2="190"/>
+    <polyline points="400,190 410,194 390,202 410,210 390,218 410,226 400,230"/>
+    <line x1="400" y1="230" x2="400" y2="258"/>
+    <!-- C4 at x=470 -->
+    <line x1="470" y1="170" x2="470" y2="214"/>
+    <line x1="452" y1="214" x2="488" y2="214"/>
+    <line x1="452" y1="224" x2="488" y2="224"/>
+    <line x1="470" y1="224" x2="470" y2="258"/>
+    <!-- local GND bar to MIC sleeve -->
+    <line x1="400" y1="258" x2="780" y2="258"/>
+    <!-- PTT: GPIO27 -> R3 33k -> MIC tip -->
+    <line x1="220" y1="340" x2="440" y2="340"/>
+    <polyline points="440,340 445,328 455,352 465,328 475,352 485,328 495,352 500,340"/>
+    <line x1="500" y1="340" x2="680" y2="340"/>
+    <line x1="680" y1="340" x2="680" y2="210"/>
+
+    <!-- RX: SP tip -> C2 1uF -> node M -> GPIO34 ; bias R4 22k to 3.3V, R5 15k to GND, C3 1000pF to GND -->
+    <line x1="780" y1="500" x2="652" y2="500"/>
+    <line x1="652" y1="482" x2="652" y2="518"/>
+    <line x1="640" y1="482" x2="640" y2="518"/>
+    <line x1="640" y1="500" x2="220" y2="500"/>
+    <!-- R4 from M(330,500) up to 3.3V line y=440 -->
+    <line x1="220" y1="440" x2="330" y2="440"/>
+    <line x1="330" y1="440" x2="330" y2="450"/>
+    <polyline points="330,450 340,454 320,462 340,470 320,478 340,486 330,490"/>
+    <line x1="330" y1="490" x2="330" y2="500"/>
+    <!-- R5 from M down to GND -->
+    <line x1="330" y1="500" x2="330" y2="530"/>
+    <polyline points="330,530 340,534 320,542 340,550 320,558 340,566 330,570"/>
+    <line x1="330" y1="570" x2="330" y2="620"/>
+    <!-- C3 at x=470 -->
+    <line x1="470" y1="500" x2="470" y2="554"/>
+    <line x1="452" y1="554" x2="488" y2="554"/>
+    <line x1="452" y1="564" x2="488" y2="564"/>
+    <line x1="470" y1="564" x2="470" y2="620"/>
+    <!-- GND -->
+    <line x1="220" y1="620" x2="780" y2="620"/>
+    <line x1="740" y1="258" x2="740" y2="620"/>
+  </g>
+  <g fill="#111">
+    <circle cx="400" cy="170" r="4"/><circle cx="470" cy="170" r="4"/><circle cx="470" cy="258" r="4"/>
+    <circle cx="680" cy="210" r="4"/>
+    <circle cx="330" cy="500" r="4"/><circle cx="470" cy="500" r="4"/>
+    <circle cx="330" cy="620" r="4"/><circle cx="470" cy="620" r="4"/>
+    <circle cx="740" cy="258" r="4"/><circle cx="740" cy="620" r="4"/>
+  </g>
+  <g fill="#b00" font-size="14">
+    <text x="300" y="150" text-anchor="middle">R1 10kΩ</text>
+    <text x="345" y="214" text-anchor="end">R2 100Ω</text>
+    <text x="496" y="223">C4 0.47µF</text>
+    <text x="566" y="145" text-anchor="middle">C1 1µF</text>
+    <text x="470" y="320" text-anchor="middle">R3 33kΩ</text>
+    <text x="646" y="475" text-anchor="middle">C2 1µF</text>
+    <text x="348" y="474">R4 22kΩ</text>
+    <text x="348" y="556">R5 15kΩ</text>
+    <text x="496" y="563">C3 1000pF</text>
+  </g>
+
+  <g font-size="14" fill="#222">
+    <text x="30" y="680" font-weight="bold">動作</text>
+    <text x="30" y="702">・送信音声: GPIO25(DAC)→ R1/R2 で約 −40dB → C1 で DC カット → MIC Tip。C4 は DAC の段差(8kHz)を平滑化</text>
+    <text x="30" y="724">・PTT: GPIO27 = LOW(オープンドレイン)→ R3 で MIC/PTT 線を GND へ。受信時は開放</text>
+    <text x="30" y="746">・受信音声: SP Tip → C2 → GPIO34(ADC)。R4/R5 で約 1.3V のバイアス、C3 は RF 除去</text>
+    <text x="30" y="768">・送信表示 LED: GPIO2(基板の LED、HIGH で点灯)／ 本体キー: BOOT ボタン(GPIO0)</text>
+    <text x="30" y="798" font-weight="bold">注意・調整</text>
+    <text x="30" y="820">・GPIO34 に 0〜約 2.4V を超える電圧をかけない。ID-31 の音量は控えめから上げ、meter で確認(−20〜−6 dBFS 目安)</text>
+    <text x="30" y="842">・送信音量は R2(小さい→220Ω / 大きい→47Ω)と txgain・outvol で調整。PTT が入らなければ R3 を 10kΩ→3.9kΩ</text>
+    <text x="30" y="864">・電解コンデンサの場合: C1 は + を ID-31 側、C2 は + を ESP32 側</text>
+    <text x="30" y="886">・ID-31 の Ring 接点は未接続。GND は 2 本のプラグの Sleeve と ESP32 の GND を共通に</text>
+    <text x="30" y="908">・ビルド: wroom.bat build ／ 書き込み: wroom.bat -p COMx flash</text>
+  </g>
+</svg>

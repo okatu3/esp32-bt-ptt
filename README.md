@@ -50,6 +50,33 @@ ESP-IDF 5.5.1(`C:\Espressif\frameworks\esp-idf-v5.5.1`)+ ESP-ADF(`C:\Users\user\
 * パスは `idf_env.bat` 内で変更できます。
 * `esp552\v5.5.2` は Python 環境のパッケージ不足(tree_sitter)で export に失敗したため、5.5.1 を使っています。
 
+## ESP32-WROOM 版(内蔵 ADC/DAC)
+
+コーデックを使わず、ESP32 内蔵の DAC(GPIO25)と ADC(GPIO34)で音声を入出力する版です。
+Bluetooth・PTT・TOT・コンソールは AudioKit 版と共通です。
+
+![WROOM 版接続図](docs/wiring_wroom.svg)
+
+印刷用: [docs/wiring_wroom.pdf](docs/wiring_wroom.pdf)(A4)
+
+| 用途 | ピン |
+|---|---|
+| 送信音声 → ID-31 MIC | GPIO25(内蔵 DAC 8bit、8kHz タイマー割り込みで出力) |
+| 受信音声 ← ID-31 SP | GPIO34(内蔵 ADC 12bit、24kHz DMA → 8kHz に間引き)。R4/R5 で約 1.3V にバイアス |
+| PTT | GPIO27(オープンドレイン、送信時 LOW) |
+| 送信表示 LED | GPIO2(HIGH で点灯) |
+| 本体キー | BOOT ボタン(GPIO0) |
+
+ビルドと書き込み(ビルドフォルダ `build_wroom`、設定ファイル `sdkconfig.wroom` を AudioKit 版と分けています):
+
+```
+.\wroom.bat build
+.\wroom.bat -p COMx flash monitor
+```
+
+* ESP32 では ADC の DMA と DAC の DMA が同じ I2S0 を使うため、DAC はタイマー割り込みで 1 サンプルずつ出力しています。
+* GPIO34 に 0〜約 2.4V の範囲を超える電圧をかけないでください。
+
 ## シリアルコンソール(115200 bps)
 
 | コマンド | 内容 |

@@ -1,0 +1,2 @@
+# ESP32-WROOM version: internal ADC (GPIO34) / DAC (GPIO25), no codec
+CONFIG_BTPTT_BOARD_WROOM=y
