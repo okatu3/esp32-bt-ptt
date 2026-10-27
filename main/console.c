@@ -4,6 +4,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/uart.h"
+#include "esp_gap_bt_api.h"
 #include "esp_system.h"
 #include "audio_io.h"
 #include "bt_ag.h"
@@ -27,6 +28,7 @@ static void print_help(void)
            "  rxgain <dB>         radio -> headset gain (-20..20)\n"
            "  txgain <dB>         headset -> radio gain (-20..20)\n"
            "  outvol <0-100>      codec output level to the radio mic\n"
+           "  name [text|-]       Bluetooth name (- = default)\n"
            "  meter               show audio peak levels for 5 s\n"
            "  reboot\n\n");
 }
@@ -34,6 +36,7 @@ static void print_help(void)
 static void print_status(void)
 {
     printf("\nboard   : %s\n", audio_io_board_name());
+    printf("name    : %s\n", g_dev_name);
     bt_ag_print_status();
     printf("PTT     : %s\n", ptt_get() ? "ON (TX)" : "off (RX)");
     printf("mode    : %s\n", g_settings.mode == HS_MODE_CALL ? "call" : "idle");
@@ -148,6 +151,12 @@ static void handle_line(char *line)
         g_settings.out_vol = (uint8_t)v;
         settings_save();
         audio_io_apply_settings();
+    } else if (!strcmp(cmd, "name")) {
+        if (arg) {
+            settings_set_name(strcmp(arg, "-") ? arg : NULL);
+            esp_bt_gap_set_device_name(g_dev_name);
+        }
+        printf("name %s\n", g_dev_name);
     } else if (!strcmp(cmd, "meter")) {
         meter();
     } else if (!strcmp(cmd, "reboot")) {

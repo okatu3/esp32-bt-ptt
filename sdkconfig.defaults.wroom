@@ -1,2 +1,5 @@
 # ESP32-WROOM version: internal ADC (GPIO34) / DAC (GPIO25), no codec
 CONFIG_BTPTT_BOARD_WROOM=y
+# ADC DMA and DAC timer interrupts must keep running during flash access (NVS, BT)
+CONFIG_ADC_CONTINUOUS_ISR_IRAM_SAFE=y
+CONFIG_GPTIMER_ISR_CACHE_SAFE=y

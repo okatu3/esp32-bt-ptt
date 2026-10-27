@@ -509,7 +509,7 @@ esp_err_t bt_ag_init(void)
     ESP_ERROR_CHECK(esp_bluedroid_init_with_cfg(&bd_cfg));
     ESP_ERROR_CHECK(esp_bluedroid_enable());
 
-    esp_bt_gap_set_device_name(CONFIG_BTPTT_DEVICE_NAME);
+    esp_bt_gap_set_device_name(g_dev_name);
     esp_bt_gap_register_callback(gap_cb);
     esp_bt_sp_param_t param_type = ESP_BT_SP_IOCAP_MODE;
     esp_bt_io_cap_t iocap = ESP_BT_IO_CAP_NONE;
@@ -537,7 +537,7 @@ esp_err_t bt_ag_init(void)
     const uint8_t *own = esp_bt_dev_get_address();
     char a[18];
     addr_str(own, a);
-    ESP_LOGI(TAG, "HFP AG ready: %s (%s)", CONFIG_BTPTT_DEVICE_NAME, a);
+    ESP_LOGI(TAG, "HFP AG ready: %s (%s)", g_dev_name, a);
 
     schedule_reconnect(FIRST_CONNECT_MS);
     if (!g_settings.has_peer) {

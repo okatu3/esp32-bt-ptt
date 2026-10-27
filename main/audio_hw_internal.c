@@ -11,6 +11,8 @@
 #include "driver/dac_oneshot.h"
 #include "driver/gptimer.h"
 #include "esp_adc/adc_continuous.h"
+#include "esp_attr.h"
+#include "hal/dac_ll.h"
 #include "esp_log.h"
 #include "audio_hw.h"
 
@@ -57,14 +59,15 @@ static void fir_init(void)
     }
 }
 
-static bool dac_timer_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *ctx)
+/* runs while flash is busy too (CONFIG_GPTIMER_ISR_CACHE_SAFE): IRAM/DRAM only */
+static bool IRAM_ATTR dac_timer_isr(gptimer_handle_t timer, const gptimer_alarm_event_data_t *edata, void *ctx)
 {
     uint32_t rd = s_dac_rd;
     if (rd != s_dac_wr) {
         s_dac_last = s_dac_buf[rd & (DAC_RING - 1)];
         s_dac_rd = rd + 1;
     }
-    dac_oneshot_output_voltage(s_dac, s_dac_last);
+    dac_ll_update_output_value(DAC_CHANNEL, s_dac_last);
     return false;
 }
 

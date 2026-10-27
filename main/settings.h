@@ -18,7 +18,11 @@ typedef struct {
     uint8_t  out_vol;     /* ES8388 DAC volume 0-100 */
 } settings_t;
 
+#define SETTINGS_NAME_MAX 32
+
 extern settings_t g_settings;
+extern char g_dev_name[SETTINGS_NAME_MAX]; /* Bluetooth device name */
 
 void settings_load(void);
 void settings_save(void);
+void settings_set_name(const char *name); /* NULL or "" = default */
